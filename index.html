@@ -4,16 +4,20 @@
     <title>Conway's Game of Life</title>
     <meta charset="utf-8">
     <style>
-      canvas {
-        width: 1000px;
+      div {
+        width: 1px;
+        height: 1px;
         margin-top: calc(50vh - 270px);
         margin-left: calc(50% - 501px);
-        border: 1px solid orange;
+        position: relative;
       }
+      
     </style>
   </head>
   <body>
-    <canvas width="1000" height="500"></canvas>
+    <div>
+      <canvas width="1000" height="500"></canvas>
+    </div>
     <script src="CellGroup.js"></script>
     <script src="model.js"></script>
     <script src="view.js"></script>

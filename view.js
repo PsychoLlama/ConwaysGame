@@ -20,19 +20,25 @@ var view,
       y: 0
     },
 
+    color: {
+      untouched: '#FFFFFF',
+      live: '#88FF88',
+      ghost: '#444444'
+    },
+
     scale: 1,
 
     cell: {
       width: 20
     },
 
-    borderWidth: .08,
+    borderWidth: 0.08,
 
-    drawGridLines: function() {
+    drawGridLines: function () {
       var row,
-          col,
-          cellHeight = view.cell.height + view.borderWidth,
-          cellWidth = view.cell.width + view.borderWidth;
+        col,
+        cellHeight = view.cell.height + view.borderWidth,
+        cellWidth = view.cell.width + view.borderWidth;
 
       ctx.beginPath();
       for (row = 0; row < canvas.height / cellHeight; row++) {
@@ -54,9 +60,20 @@ var view,
         }
       }
       ctx.lineWidth = view.borderWidth;
-      ctx.strokeStyle = "#303438"
+      ctx.strokeStyle = "#303438";
       ctx.stroke();
-      ctx.closePath;
+      ctx.closePath();
+    },
+
+    toggleCell: function (x, y) {
+      var cellHeight = view.cell.height + view.borderWidth,
+        cellWidth = view.cell.width + view.borderWidth,
+        row = Math.floor(x / cellHeight),
+        col = Math.floor(y / cellWidth),
+        topPixel = row * cellHeight,
+        leftPixel = col * cellWidth;
+      ctx.fillStyle = view.color.live;
+      ctx.fillRect(topPixel, leftPixel, view.cell.width, view.cell.height);
     }
   };
 
