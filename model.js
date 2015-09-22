@@ -13,7 +13,7 @@ var model = {
     return this;
   },
 
-  alive: function (cell) {
+  isAlive: function (cell) {
     return !!this.liveCells[cell];
   },
 
@@ -36,25 +36,37 @@ var model = {
     ];
   },
 
+  getNumLiveNeighbors: function (cell) {
+    var count = 0,
+      self = this;
+    this.getNeighbors(cell).forEach(function (neighborCell) {
+      if (self.isAlive(neighborCell)) {
+        count++;
+      }
+    });
+    return count;
+  },
+
   next: function () {
     var neighbors = new CellGroup(),
       deadNeighbors = new CellGroup(),
-      nextGeneration = new CellGroup();
+      nextGeneration = new CellGroup(),
+      self = this;
 
 
     this.liveCells.each(function (cell) {
-      var cellNeighbors = this.getNeighbors(cell);
+      var cellNeighbors = self.getNeighbors(cell);
       neighbors.add(cellNeighbors);
     });
 
     neighbors.each(function (cell) {
-      if (!this.alive(cell)) {
+      if (!self.isAlive(cell)) {
         deadNeighbors.add(cell);
       }
     });
 
     deadNeighbors.each(function (cell) {
-      if (this.getNeighbors(cell).length === 3) {
+      if (self.getNumLiveNeighbors(cell) === 3) {
         nextGeneration.add(cell);
       }
     });

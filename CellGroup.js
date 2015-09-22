@@ -51,8 +51,8 @@ CellGroup.prototype = {
     var cell,
       results = new CellGroup();
 
-    for (cell in this.liveCells) {
-      if (this.liveCells.hasOwnProperty(cell)) {
+    for (cell in this) {
+      if (this.hasOwnProperty(cell)) {
         results.add(callback(cell, this));
       }
     }

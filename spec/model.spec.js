@@ -1,10 +1,10 @@
 /*globals require, describe, beforeEach, it, expect */
 /*jslint node: true*/
 'use strict';
-var CellGroupExports = require('../CellGroup.js'),
-  model = require('../model.js').model,
-  delimiter = CellGroupExports.delimiter,
-  CellGroup = CellGroupExports.CellGroup;
+var CellGroup = require('../CellGroup.js').CellGroup,
+  ModelExports = require('../model.js'),
+  model = ModelExports.model,
+  delimiter = ModelExports.delimiter;
 
 describe('The next generation', function () {
   var expectedCells,
@@ -16,8 +16,8 @@ describe('The next generation', function () {
     
     makeCells = function(cellsArray) {
       var liveCells = [];
-      cellsArray.forEach(function(yArray, y) {
-        yArray.forEach(function(cell, x) {
+      cellsArray.forEach(function(xArray, y) {
+        xArray.forEach(function(cell, x) {
           if (cell) {
             var coord = x + delimiter + y;
             liveCells.push(coord);
@@ -59,18 +59,19 @@ describe('The next generation', function () {
   });
 
   it('should create two live cells to make a spinner after two live neighbors', function () {
+    model.liveCells = new CellGroup();
+    expectedCells = new CellGroup();
     
     model.liveCells.add(makeCells([
       [0, 1, 0],
       [0, 1, 0],
       [0, 1, 0]
     ]));
-    
-    // Purposefully broke test. Both objects are empty for some reason
+
     expectedCells.add(makeCells([
+      [0, 0, 0],
       [1, 1, 1],
-      [1, 1, 1],
-      [1, 1, 1]
+      [0, 0, 0]
     ]));
     
     model.next();
