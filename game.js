@@ -1,6 +1,4 @@
 var grid = {
-  "10-3": {
-    age: new Date(),
-    alive: false
-  }
+  "10|3": null
 }
+grid[cell].alive
