@@ -1,1 +1,4 @@
 // CONTROLLER
+var game = {
+
+};
