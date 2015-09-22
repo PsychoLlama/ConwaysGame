@@ -42,7 +42,7 @@ CellGroup.prototype = {
       return this;
     }
     if (this[cell] === undefined) {
-      this[cell] = true;
+      this[cell] = cell;
     }
     return this;
   },
