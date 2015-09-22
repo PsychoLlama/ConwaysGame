@@ -41,7 +41,7 @@ var model = {
       self = this;
     this.getNeighbors(cell).forEach(function (neighborCell) {
       if (self.isAlive(neighborCell)) {
-        count++;
+        count += 1;
       }
     });
     return count;
@@ -55,8 +55,13 @@ var model = {
 
 
     this.liveCells.each(function (cell) {
-      var cellNeighbors = self.getNeighbors(cell);
+      var cellNeighbors = self.getNeighbors(cell),
+        liveNeighbors = self.getNumLiveNeighbors(cell);
       neighbors.add(cellNeighbors);
+
+      if (liveNeighbors === 2 || liveNeighbors === 3) {
+        nextGeneration.add(cell);
+      }
     });
 
     neighbors.each(function (cell) {

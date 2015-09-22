@@ -13,11 +13,11 @@ describe('The next generation', function () {
     runTest = function () {
       expect(model.next().liveCells).toEqual(expectedCells);
     },
-    
-    makeCells = function(cellsArray) {
+
+    makeCells = function (cellsArray) {
       var liveCells = [];
-      cellsArray.forEach(function(xArray, y) {
-        xArray.forEach(function(cell, x) {
+      cellsArray.forEach(function (xArray, y) {
+        xArray.forEach(function (cell, x) {
           if (cell) {
             var coord = x + delimiter + y;
             liveCells.push(coord);
@@ -42,26 +42,23 @@ describe('The next generation', function () {
   });
 
   it('should create one live cell after three live neighbors', function () {
-    
+
     model.liveCells.add(makeCells([
       [1, 0, 1],
       [0, 0, 0],
       [0, 0, 1]
     ]));
-    
+
     expectedCells.add(makeCells([
       [0, 0, 0],
       [0, 1, 0],
       [0, 0, 0]
     ]));
-    
+
     runTest();
   });
 
   it('should create two live cells to make a spinner after two live neighbors', function () {
-    model.liveCells = new CellGroup();
-    expectedCells = new CellGroup();
-    
     model.liveCells.add(makeCells([
       [0, 1, 0],
       [0, 1, 0],
@@ -73,9 +70,40 @@ describe('The next generation', function () {
       [1, 1, 1],
       [0, 0, 0]
     ]));
-    
-    model.next();
-    expect(model.liveCells).toEqual(expectedCells);
+
+    runTest();
+  });
+
+  it('should not kill off cells with three neighbors', function () {
+    model.liveCells.add(makeCells([
+      [1, 1],
+      [1, 1]
+    ]));
+
+    expectedCells.add(makeCells([
+      [1, 1],
+      [1, 1]
+    ]));
+
+    runTest();
+  });
+
+  it('allow gliders', function () {
+    model.liveCells.add(makeCells([
+      [0, 0, 0, 0],
+      [0, 1, 1, 0],
+      [1, 0, 1, 0],
+      [0, 0, 1, 0]
+    ]));
+
+    expectedCells.add(makeCells([
+      [0, 0, 0, 0],
+      [0, 1, 1, 0],
+      [0, 0, 1, 1],
+      [0, 1, 0, 0]
+    ]));
+
+    runTest();
   });
 
 });
