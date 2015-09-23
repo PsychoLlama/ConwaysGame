@@ -10,7 +10,10 @@ var game;
       document.getElementsByTagName('canvas')[0]
         .addEventListener('click', game.relayGameClick);
       document.getElementById('step')
-        .addEventListener('click', game.step);
+        .addEventListener('click', function () {
+          game.running = false;
+          game.step();
+        });
       document.getElementById('toggle')
         .addEventListener('click', game.toggle);
 
@@ -27,11 +30,10 @@ var game;
 
       if (cellIsAlive) {
         model.killCell(cellCoord);
-        view.paintCell(col, row, view.color.ghost);
       } else {
         model.createCell(cellCoord);
-        view.paintCell(col, row, view.color.live);
       }
+      view.render();
 
     },
 

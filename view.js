@@ -22,7 +22,7 @@ var view,
 
   view = {
     topLeftCellReference: {
-      modelCellX: 0,
+      modelCellX: 4,
       modelCellY: 0
     },
 
@@ -30,9 +30,10 @@ var view,
       untouched: '#EEE',
       live: 'green',
       ghost: '#ccc',
-      grid: '#FFF'
+      grid: '#ccc'
     },
 
+    borderWidth: 1,
     scale: 1,
 
     // Partial cell in the top left corner will change this
@@ -51,9 +52,10 @@ var view,
       return row + view.topLeftCellReference.modelCellY;
     },
 
-    borderWidth: 1,
-
     drawBorder: function (x, y) {
+      if (view.borderWidth === 0) {
+        return;
+      }
       ctx.lineWidth = view.borderWidth;
       ctx.strokeStyle = view.color.grid;
       ctx.strokeRect(x, y, view.cell.width, view.cell.height);
@@ -64,8 +66,6 @@ var view,
         cellWidth = view.cell.width + view.borderWidth,
         topPixel = row * cellHeight,
         leftPixel = col * cellWidth;
-      topPixel += view.borderWidth / 2;
-      leftPixel += view.borderWidth / 2;
 
       view.drawBorder(leftPixel, topPixel);
       ctx.fillStyle = color;
@@ -101,7 +101,7 @@ var view,
     cell: {}
   };
 
-  view.cell.width = 10;
+  view.cell.width = 5;
   view.cell.height = view.cell.width;
   view.render();
 }());
