@@ -1,12 +1,70 @@
+/*globals model, view*/
 // CONTROLLER
-var game = {
-  relayGameClick: function(e) {
-    var x = e.layerX,
-      y = e.layerY;
-//      row = view.getRow(y),
-//      col = view.getCol(x),
-//      coor;
-    view.toggleCell(x, y);
-  }
-};
-document.querySelector('canvas').addEventListener('click', game.relayGameClick);
+var game;
+(function () {
+  'use strict';
+  game = {
+    init: function () {
+      view.render();
+
+      document.getElementsByTagName('canvas')[0]
+        .addEventListener('click', game.relayGameClick);
+      document.getElementById('step')
+        .addEventListener('click', game.step);
+      document.getElementById('toggle')
+        .addEventListener('click', game.toggle);
+
+    },
+
+    relayGameClick: function (e) {
+      var pixelX = e.layerX,
+        pixelY = e.layerY,
+        // get row and cell in the view
+        row = view.getModelRefY(pixelY),
+        col = view.getModelRefX(pixelX),
+        cellCoord = model.getCoord(col, row),
+        cellIsAlive = model.isAlive(cellCoord);
+
+      if (cellIsAlive) {
+        model.killCell(cellCoord);
+        view.paintCell(col, row, view.color.ghost);
+      } else {
+        model.createCell(cellCoord);
+        view.paintCell(col, row, view.color.live);
+      }
+
+    },
+
+    running: false,
+
+    step: function () {
+      model.next();
+      view.render();
+
+      if (model.liveCells.length === 0) {
+        game.stop();
+      }
+      if (game.running) {
+        window.requestAnimationFrame(game.step);
+      }
+    },
+
+    run: function () {
+      game.running = true;
+      game.step();
+    },
+
+    toggle: function () {
+      game.running = !game.running;
+      if (game.running === true) {
+        game.step();
+      }
+    },
+
+    stop: function () {
+      game.running = false;
+    }
+  };
+
+  game.init();
+}());

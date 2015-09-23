@@ -41,6 +41,7 @@ var CellGroup;
       }
       if (cell.constructor !== String) {
         return this;
+//        TODO: validate string
       }
       if (this[cell] === undefined) {
         this[cell] = cell;

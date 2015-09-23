@@ -1,11 +1,17 @@
-/*globals exports*/
+/*globals model, game*/
+/*jslint plusplus: true */
 /*
-  reset
-  play
+
+√ reset
+√ play
+√ stop
   zoom
-  step
-  toggle cell
+√ step
+√ toggle cell
+
 */
+
+// Life would be easier if the cell border was part of it's height/width
 
 var view,
   canvas = document.querySelector('canvas'),
@@ -15,69 +21,87 @@ var view,
   'use strict';
 
   view = {
-    port: {
-      x: 0,
-      y: 0
+    topLeftCellReference: {
+      modelCellX: 0,
+      modelCellY: 0
     },
 
     color: {
-      untouched: '#FFFFFF',
-      live: '#88FF88',
-      ghost: '#444444'
+      untouched: '#EEE',
+      live: 'green',
+      ghost: '#ccc',
+      grid: '#FFF'
     },
 
     scale: 1,
 
-    cell: {
-      width: 20
+    // Partial cell in the top left corner will change this
+    getModelRefY: function (pixelY) {
+      return view.getModelCoordY(Math.floor(pixelY / (view.cell.height + view.borderWidth)));
+    },
+    getModelRefX: function (pixelX) {
+      return view.getModelCoordX(Math.floor(pixelX / (view.cell.width + view.borderWidth)));
     },
 
-    borderWidth: 0.08,
+    getModelCoordX: function (col) {
+      return col + view.topLeftCellReference.modelCellX;
+    },
 
-    drawGridLines: function () {
-      var row,
-        col,
-        cellHeight = view.cell.height + view.borderWidth,
-        cellWidth = view.cell.width + view.borderWidth;
+    getModelCoordY: function (row) {
+      return row + view.topLeftCellReference.modelCellY;
+    },
 
-      ctx.beginPath();
-      for (row = 0; row < canvas.height / cellHeight; row++) {
-        if (row === 0) {
-          ctx.moveTo(col * view.cell.height, 0);
-          ctx.lineTo(col * view.cell.height, canvas.height);
-        } else {
-          ctx.moveTo(0, row * cellHeight);
-          ctx.lineTo(canvas.width, row * cellHeight);
-        }
-      }
-      for (col = 1; col < canvas.width / cellWidth; col++) {
-        if (col === 1) {
-          ctx.moveTo(col * view.cell.width, 0);
-          ctx.lineTo(col * view.cell.width, canvas.height);
-        } else {
-          ctx.moveTo(col * cellWidth, 0);
-          ctx.lineTo(col * cellWidth, canvas.height);
-        }
-      }
+    borderWidth: 1,
+
+    drawBorder: function (x, y) {
       ctx.lineWidth = view.borderWidth;
-      ctx.strokeStyle = "#303438";
-      ctx.stroke();
-      ctx.closePath();
+      ctx.strokeStyle = view.color.grid;
+      ctx.strokeRect(x, y, view.cell.width, view.cell.height);
     },
 
-    toggleCell: function (x, y) {
+    paintCell: function (col, row, color) {
       var cellHeight = view.cell.height + view.borderWidth,
         cellWidth = view.cell.width + view.borderWidth,
-        row = Math.floor(x / cellHeight),
-        col = Math.floor(y / cellWidth),
         topPixel = row * cellHeight,
         leftPixel = col * cellWidth;
-      ctx.fillStyle = view.color.live;
-      ctx.fillRect(topPixel, leftPixel, view.cell.width, view.cell.height);
-    }
+      topPixel += view.borderWidth / 2;
+      leftPixel += view.borderWidth / 2;
+
+      view.drawBorder(leftPixel, topPixel);
+      ctx.fillStyle = color;
+      ctx.fillRect(leftPixel, topPixel, view.cell.width, view.cell.height);
+    },
+
+    render: function () {
+      var col, row,
+        totalRows = Math.ceil(canvas.height / view.cell.height),
+        totalCols = Math.ceil(canvas.width / view.cell.width),
+        coordX, coordY, color, coord;
+
+      for (row = 0; row < totalRows; row++) {
+        for (col = 0; col < totalCols; col++) {
+          // TODO: move getCoord interface to controller
+          coordX = view.getModelCoordX(col);
+          coordY = view.getModelCoordY(row);
+          color = view.color.untouched;
+          coord = model.getCoord(coordX, coordY);
+
+          if (model.liveCells[coord]) {
+            color = view.color.live;
+          } else if (model.cellHistory[coord]) {
+            color = view.color.ghost;
+          } else {
+            color = view.color.untouched;
+          }
+          view.paintCell(col, row, color);
+        }
+      }
+    },
+
+    cell: {}
   };
 
+  view.cell.width = 10;
+  view.cell.height = view.cell.width;
+  view.render();
 }());
-
-view.cell.height = view.cell.width;
-view.drawGridLines();

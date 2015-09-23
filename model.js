@@ -1,4 +1,5 @@
-/*globals exports, require, parseInt, CellGroup*/
+/*globals exports, require, parseInt, CellGroup, console*/
+/*jslint plusplus: true*/
 var model,
   delimiter;
 
@@ -6,13 +7,28 @@ var model,
 (function () {
   'use strict';
   delimiter = ":";
-
+  // TODO: replace delimiter logic with getCoord
   model = {
     liveCells: new CellGroup(),
+    cellHistory: new CellGroup(),
+    numOfCurrentGen: 0,
 
     reset: function () {
       this.liveCells = new CellGroup();
       return this;
+    },
+
+    getCoord: function (x, y) {
+      return x + delimiter + y;
+    },
+
+    killCell: function (coord) {
+      delete this.liveCells[coord];
+    },
+
+    createCell: function (coord) {
+      this.liveCells.add(coord);
+      this.cellHistory.add(coord);
     },
 
     isAlive: function (cell) {
@@ -62,6 +78,7 @@ var model,
 
         if (liveNeighbors === 2 || liveNeighbors === 3) {
           nextGeneration.add(cell);
+          self.cellHistory.add(cell);
         }
       });
 
@@ -74,11 +91,13 @@ var model,
       deadNeighbors.each(function (cell) {
         if (self.getNumLiveNeighbors(cell) === 3) {
           nextGeneration.add(cell);
+          self.cellHistory.add(cell);
         }
       });
 
       this.liveCells = nextGeneration;
-
+      this.numOfCurrentGen++;
+      console.count("Generation Number");
 
       return this;
     }
