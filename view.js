@@ -26,11 +26,17 @@ var view,
       modelCellY: 0
     },
 
+    setCanvasDimensions: function(x, y) {
+      canvas.width = x;
+      canvas.height = y;
+      view.render();
+    },
+
     color: {
       untouched: '#EEE',
       live: 'green',
       ghost: '#ccc',
-      grid: '#ccc'
+      grid: 'white'
     },
 
     borderWidth: 1,
@@ -101,7 +107,7 @@ var view,
     cell: {}
   };
 
-  view.cell.width = 5;
+  view.cell.width = 7;
   view.cell.height = view.cell.width;
   view.render();
 }());

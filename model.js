@@ -15,6 +15,7 @@ var model,
 
     reset: function () {
       this.liveCells = new CellGroup();
+      this.cellHistory = new CellGroup();
       return this;
     },
 

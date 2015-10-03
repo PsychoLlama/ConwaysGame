@@ -3,22 +3,15 @@
   <head>
     <title>Conway's Game of Life</title>
     <meta charset="utf-8">
-    <style>
-      div {
-        width: 1px;
-        height: 1px;
-        margin-top: calc(50vh - 270px);
-        margin-left: calc(50% - 501px);
-        position: relative;
-      }
-    </style>
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <div>
-      <canvas width="300" height="150"></canvas>
+    <canvas></canvas>
+    <div id='gameControls'>
+      <button id="stepButton">Step</button>
+      <button id="runPauseButton">Run/Stop</button>
+      <button id="resetButton">Reset</button>
     </div>
-    <button id="step">Step</button>
-    <button id="toggle">Run/Stop</button>
     <script src="CellGroup.js"></script>
     <script src="model.js"></script>
     <script src="view.js"></script>

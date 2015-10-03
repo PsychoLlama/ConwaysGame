@@ -7,16 +7,25 @@ var game;
     init: function () {
       view.render();
 
-      document.getElementsByTagName('canvas')[0]
-        .addEventListener('click', game.relayGameClick);
-      document.getElementById('step')
-        .addEventListener('click', function () {
-          game.running = false;
-          game.step();
-        });
-      document.getElementById('toggle')
-        .addEventListener('click', game.toggle);
+      var controlsWidth = 250;
 
+      view.setCanvasDimensions(
+        window.innerWidth - controlsWidth,
+        window.innerHeight - 5);
+
+      document.querySelector('#gameControls').style.width = controlsWidth + 'px';
+
+      get('canvas').listen('click', game.relayGameClick);
+      get('#stepButton').listen('click', function () {
+        game.running = false;
+        game.step();
+
+      });
+      get('#runPauseButton').listen('click', game.toggle);
+      get('#resetButton').listen('click', function () {
+          model.reset();
+          view.render();
+      });
     },
 
     relayGameClick: function (e) {
@@ -67,6 +76,17 @@ var game;
       game.running = false;
     }
   };
+
+  function get(selector) {
+    var target = document.querySelector(selector);
+
+    return {
+      listen: function (event, handler) {
+        target.addEventListener(event, handler);
+        return this;
+      }
+    }
+  }
 
   game.init();
 }());

@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+}
+canvas {
+  cursor: crosshair;
+}
+#gameControls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  height: 100vh;
+}
+#gameControls button {
+  display: block;
+}
