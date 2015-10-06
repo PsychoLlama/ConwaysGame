@@ -7,7 +7,6 @@ var model,
 (function () {
   'use strict';
   delimiter = ":";
-  // TODO: replace delimiter logic with getCoord
   model = {
     liveCells: new CellGroup(),
     cellHistory: new CellGroup(),
@@ -44,14 +43,14 @@ var model,
       x = parseInt(x, 10);
       y = parseInt(y, 10);
       return [
-        x - 1 + delimiter + (y - 1),
-        x - 1 + delimiter + (y + 0),
-        x - 1 + delimiter + (y + 1),
-        x + 0 + delimiter + (y - 1),
-        x + 0 + delimiter + (y + 1),
-        x + 1 + delimiter + (y - 1),
-        x + 1 + delimiter + (y + 0),
-        x + 1 + delimiter + (y + 1)
+        this.getCoord(x - 1, y - 1),
+        this.getCoord(x - 1, y + 0),
+        this.getCoord(x - 1, y + 1),
+        this.getCoord(x + 0, y - 1),
+        this.getCoord(x + 0, y + 1),
+        this.getCoord(x + 1, y - 1),
+        this.getCoord(x + 1, y + 0),
+        this.getCoord(x + 1, y + 1)
       ];
     },
 
