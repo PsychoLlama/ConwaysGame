@@ -5,7 +5,7 @@
   "main": "game-controller.js",
   "scripts": {
     "test": "jasmine",
-		"build": "webpack game-controller.js bundle.js --watch"
+		"build": "webpack --watch"
   },
   "repository": {
     "type": "git",
