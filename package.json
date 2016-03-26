@@ -1,0 +1,27 @@
+{
+  "name": "conways-game",
+  "version": "0.1.0",
+  "description": "Conway's game",
+  "main": "game-controller.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PsychoLlama/ConwaysGame.git"
+  },
+  "keywords": [
+    "conway",
+    "conways",
+    "conway's",
+    "game",
+    "GoL",
+    "Game of Life"
+  ],
+  "author": "Jesse Gibson <jesse@gundb.io> (http://techllama.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PsychoLlama/ConwaysGame/issues"
+  },
+  "homepage": "https://github.com/PsychoLlama/ConwaysGame#readme"
+}
