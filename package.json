@@ -4,7 +4,8 @@
   "description": "Conway's game",
   "main": "game-controller.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+		"build": "webpack game-controller.js bundle.js --watch"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/PsychoLlama/ConwaysGame/issues"
   },
-  "homepage": "https://github.com/PsychoLlama/ConwaysGame#readme"
+  "homepage": "https://github.com/PsychoLlama/ConwaysGame#readme",
+  "devDependencies": {
+    "webpack": "^1.12.14"
+  }
 }

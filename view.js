@@ -1,5 +1,4 @@
-/*globals model, game*/
-/*jslint plusplus: true */
+/*jslint plusplus: true, node: true */
 /*
 
 √ reset
@@ -12,6 +11,8 @@
 */
 
 // Life would be easier if the cell border was part of it's height/width
+
+var model = require("./model").model;
 
 var view,
 	canvas = document.querySelector('canvas'),
@@ -111,3 +112,7 @@ var view,
 	view.cell.height = view.cell.width;
 	view.render();
 }());
+
+module.exports = {
+	view: view
+};

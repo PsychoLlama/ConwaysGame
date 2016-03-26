@@ -1,5 +1,8 @@
-/*globals model, view*/
+/*jslint node: true*/
 // CONTROLLER
+var view = require("./view").view;
+var model = require("./model").model;
+
 var game;
 (function () {
 	'use strict';
