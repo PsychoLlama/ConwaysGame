@@ -2,6 +2,8 @@
 'use strict';
 var CellGroup = require('../CellGroup.js').CellGroup;
 
+
+
 describe('The cell group', function () {
   var cells;
 
@@ -10,7 +12,7 @@ describe('The cell group', function () {
   });
 
   /*
-  constructor with no arguments
+  constructor with no argumentsl
   constructor with String argument
   constructor with Array argument
   constructor with CellGroup argument
