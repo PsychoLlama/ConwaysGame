@@ -12,7 +12,7 @@
 
 // Life would be easier if the cell border was part of it's height/width
 
-var model = window.model = require("./model").model;
+var model = require("./model").model;
 var delimiter = require('./model').delimiter;
 
 var view,
@@ -22,7 +22,7 @@ var view,
 (function () {
 	'use strict';
 
-	view = window.view = {
+	view = {
 		topLeftCellReference: {
 			modelCellX: 4,
 			modelCellY: 0

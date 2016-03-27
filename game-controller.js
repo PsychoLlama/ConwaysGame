@@ -28,8 +28,8 @@ var game;
 			var controlsWidth = 250;
 
 			view.setCanvasDimensions(
-				window.innerWidth - controlsWidth,
-				window.innerHeight - 5
+				window.innerWidth,
+				window.innerHeight - 6
 			);
 
 			document.querySelector('#gameControls').style.width = controlsWidth + 'px';
@@ -38,7 +38,6 @@ var game;
 			get('#stepButton').listen('click', function () {
 				game.running = false;
 				game.step();
-
 			});
 			get('#runPauseButton').listen('click', game.toggle);
 			get('#resetButton').listen('click', function () {
@@ -64,15 +63,12 @@ var game;
 				model.createCell(cellCoord);
 				view.renderCell(cellCoord, view.color.live);
 			}
-//			view.render();
-
 		},
 
 		running: false,
 
 		step: function () {
 			model.next();
-//			view.render();
 			view.renderGroup(model.newAliveCells, view.color.live);
 			view.renderGroup(model.newDeadCells, view.color.ghost);
 
