@@ -113,6 +113,4 @@ var view,
 	view.render();
 }());
 
-module.exports = {
-	view: view
-};
+module.exports = view;

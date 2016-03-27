@@ -1,6 +1,6 @@
 /*globals require, describe, beforeEach, Map, it, expect */
 'use strict';
-var CellGroup = require('../CellGroup.js').CellGroup;
+var CellGroup = require('../CellGroup.js');
 
 
 

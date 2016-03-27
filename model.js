@@ -2,7 +2,7 @@
 /*jslint plusplus: true*/
 var model,
 	delimiter;
-var CellGroup = require('./CellGroup').CellGroup;
+var CellGroup = require('./CellGroup');
 
 // MODEL
 (function () {

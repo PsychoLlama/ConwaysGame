@@ -1,7 +1,7 @@
 /*globals require, describe, beforeEach, it, expect */
 /*jslint node: true*/
 'use strict';
-var CellGroup = require('../CellGroup.js').CellGroup,
+var CellGroup = require('../CellGroup.js'),
   ModelExports = require('../model.js'),
   model = ModelExports.model,
   delimiter = ModelExports.delimiter;

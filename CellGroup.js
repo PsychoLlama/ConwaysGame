@@ -1,4 +1,4 @@
-/*jslint es5: true */
+/*jslint es5: true, node: true*/
 
 var CellGroup;
 
@@ -50,8 +50,7 @@ var CellGroup;
 		},
 
 		each: function (callback) {
-			var cell,
-				results = new CellGroup();
+			var cell, results = new CellGroup();
 
 			for (cell in this) {
 				if (this.hasOwnProperty(cell)) {
@@ -63,8 +62,4 @@ var CellGroup;
 	};
 }());
 
-if (typeof module === 'object') {
-	module.exports = {
-		CellGroup: CellGroup
-	};
-}
+module.exports = CellGroup;

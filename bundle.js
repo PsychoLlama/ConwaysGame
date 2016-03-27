@@ -46,7 +46,7 @@
 
 	/*jslint node: true*/
 	// CONTROLLER
-	var view = __webpack_require__(1).view;
+	var view = __webpack_require__(1);
 	var model = __webpack_require__(2).model;
 
 	var game;
@@ -264,9 +264,7 @@
 		view.render();
 	}());
 
-	module.exports = {
-		view: view
-	};
+	module.exports = view;
 
 
 /***/ },
@@ -277,7 +275,7 @@
 	/*jslint plusplus: true*/
 	var model,
 		delimiter;
-	var CellGroup = __webpack_require__(3).CellGroup;
+	var CellGroup = __webpack_require__(3);
 
 	// MODEL
 	(function () {
@@ -391,9 +389,9 @@
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	/*jslint es5: true */
+	/*jslint es5: true, node: true*/
 
 	var CellGroup;
 
@@ -445,8 +443,7 @@
 			},
 
 			each: function (callback) {
-				var cell,
-					results = new CellGroup();
+				var cell, results = new CellGroup();
 
 				for (cell in this) {
 					if (this.hasOwnProperty(cell)) {
@@ -458,11 +455,8 @@
 		};
 	}());
 
-	if (true) {
-		module.exports = {
-			CellGroup: CellGroup
-		};
-	}
+	module.exports = CellGroup;
+
 
 /***/ }
 /******/ ]);

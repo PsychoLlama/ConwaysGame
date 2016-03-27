@@ -1,6 +1,6 @@
 /*jslint node: true*/
 // CONTROLLER
-var view = require("./view").view;
+var view = require("./view");
 var model = require("./model").model;
 
 var game;
