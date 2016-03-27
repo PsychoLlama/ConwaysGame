@@ -12,7 +12,8 @@
 
 // Life would be easier if the cell border was part of it's height/width
 
-var model = require("./model").model;
+var model = window.model = require("./model").model;
+var delimiter = require('./model').delimiter;
 
 var view,
 	canvas = document.querySelector('canvas'),
@@ -21,7 +22,7 @@ var view,
 (function () {
 	'use strict';
 
-	view = {
+	view = window.view = {
 		topLeftCellReference: {
 			modelCellX: 4,
 			modelCellY: 0
@@ -104,11 +105,26 @@ var view,
 				}
 			}
 		},
+		
+		renderCell: function (cell, color) {
+			var col, row, coord;
+			coord = cell.split(delimiter);
+			col = coord[0] - view.topLeftCellReference.modelCellX;
+			row = coord[1] - view.topLeftCellReference.modelCellY;
+
+			view.paintCell(col, row, color);
+		},
+
+		renderGroup: function (group, color) {
+			group.each(function (coord) {
+				view.renderCell(coord, color);
+			});
+		},
 
 		cell: {}
 	};
 
-	view.cell.width = 7;
+	view.cell.width = 5;
 	view.cell.height = view.cell.width;
 	view.render();
 }());

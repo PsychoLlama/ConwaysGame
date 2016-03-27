@@ -1,7 +1,5 @@
-/*globals exports, require, parseInt, CellGroup, console*/
-/*jslint plusplus: true*/
-var model,
-	delimiter;
+/*jslint plusplus: true, node: true*/
+var model, delimiter;
 var CellGroup = require('./CellGroup');
 
 // MODEL
@@ -71,6 +69,9 @@ var CellGroup = require('./CellGroup');
 				deadNeighbors = new CellGroup(),
 				nextGeneration = new CellGroup(),
 				self = this;
+			
+			model.newDeadCells = new CellGroup();
+			model.newAliveCells = new CellGroup();
 
 			this.liveCells.each(function (cell) {
 				var cellNeighbors = self.getNeighbors(cell),
@@ -80,8 +81,14 @@ var CellGroup = require('./CellGroup');
 				if (liveNeighbors === 2 || liveNeighbors === 3) {
 					nextGeneration.add(cell);
 					self.cellHistory.add(cell);
+				} else {
+					model.newDeadCells.add(cell);
 				}
 			});
+			/*
+			 * We could try to render these
+			 * out as soon as they die...
+			 **/
 
 			neighbors.each(function (cell) {
 				if (!self.isAlive(cell)) {
@@ -92,9 +99,14 @@ var CellGroup = require('./CellGroup');
 			deadNeighbors.each(function (cell) {
 				if (self.getNumLiveNeighbors(cell) === 3) {
 					nextGeneration.add(cell);
+					model.newAliveCells.add(cell);
 					self.cellHistory.add(cell);
 				}
 			});
+			/*
+			 * ...and we could then render
+			 * these as soon as they are born.
+			 **/
 
 			this.liveCells = nextGeneration;
 			this.numOfCurrentGen++;
@@ -107,9 +119,7 @@ var CellGroup = require('./CellGroup');
 
 }());
 
-if (typeof module === 'object') {
-	module.exports = {
-		model: model,
-		delimiter: delimiter
-	};
-}
+module.exports = {
+	model: model,
+	delimiter: delimiter
+};

@@ -22,6 +22,7 @@ var game;
 
 	game = {
 		init: function () {
+			// We always need initial rendering
 			view.render();
 
 			var controlsWidth = 250;
@@ -41,6 +42,7 @@ var game;
 			});
 			get('#runPauseButton').listen('click', game.toggle);
 			get('#resetButton').listen('click', function () {
+				// Keep this
 				model.reset();
 				view.render();
 			});
@@ -57,10 +59,12 @@ var game;
 
 			if (cellIsAlive) {
 				model.killCell(cellCoord);
+				view.renderCell(cellCoord, view.color.ghost);
 			} else {
 				model.createCell(cellCoord);
+				view.renderCell(cellCoord, view.color.live);
 			}
-			view.render();
+//			view.render();
 
 		},
 
@@ -68,7 +72,9 @@ var game;
 
 		step: function () {
 			model.next();
-			view.render();
+//			view.render();
+			view.renderGroup(model.newAliveCells, view.color.live);
+			view.renderGroup(model.newDeadCells, view.color.ghost);
 
 			if (model.liveCells.length === 0) {
 				game.stop();
